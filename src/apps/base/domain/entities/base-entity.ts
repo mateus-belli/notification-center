@@ -1,21 +1,21 @@
-import { randomUUID } from 'crypto';
+import { randomUUID, UUID } from 'crypto';
 
 export interface IBaseProperties {
-  id: string;
+  id: UUID;
   createdAt: number;
   updatedAt: number;
 }
 
-type OmitProperties = 'id' | 'createdAt' | 'updatedAt' | 'update';
+type IOmittedProperties = 'id' | 'createdAt' | 'updatedAt' | 'update';
 
 export class BaseEntity {
-  protected _id: string;
+  protected _id: UUID;
   protected _createdAt: number;
   protected _updatedAt: number;
 
   static create<T extends BaseEntity>(
     this: new () => T,
-    properties: Omit<T, OmitProperties>,
+    properties: Omit<T, IOmittedProperties>,
   ): T {
     const instance = new this();
 
@@ -28,7 +28,7 @@ export class BaseEntity {
     return instance;
   }
 
-  update<P extends Partial<Omit<this, OmitProperties>>>(properties: P) {
+  update<P extends Partial<Omit<this, IOmittedProperties>>>(properties: P) {
     Object.assign(this, properties);
 
     this._id = randomUUID();
@@ -40,7 +40,7 @@ export class BaseEntity {
     return this._id;
   }
 
-  protected set id(val: string) {
+  protected set id(val: UUID) {
     this._id = val;
   }
 
