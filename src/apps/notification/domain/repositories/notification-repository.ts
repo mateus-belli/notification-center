@@ -8,7 +8,7 @@ export interface INotificationFilter {
   };
 }
 
-export abstract class NotificationRepository {
+export abstract class INotificationRepository {
   abstract list: (
     filter?: INotificationFilter,
   ) => Promise<NotificationEntity[]>;

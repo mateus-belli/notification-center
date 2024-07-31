@@ -1,5 +1,5 @@
 import { BaseEntity } from 'src/apps/base/domain/entities/base-entity';
-import { NotificationMessageEntity } from './notification-message-entity';
+import { NotificationMessageEntity } from './notification-message.entity';
 
 export class NotificationEntity extends BaseEntity {
   private _receiversIds: string[];

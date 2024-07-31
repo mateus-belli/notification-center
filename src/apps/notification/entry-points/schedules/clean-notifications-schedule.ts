@@ -11,7 +11,7 @@ export class CleanNotificationSchedule {
   ) {}
 
   @Cron(CronExpression.EVERY_DAY_AT_1PM)
-  async cron() {
+  async trigger() {
     await this.cleanNotificationsService.execute({
       days: CleanNotificationSchedule.REMOVE_AFTER_DAYS,
     });

@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { NotificationRepository } from '../repositories/notification-repository';
+import { INotificationRepository } from '../repositories/notification-repository';
 import dayjs from 'dayjs';
 
 @Injectable()
 export class CleanNotificationsService {
   constructor(
-    private readonly notificationRepository: NotificationRepository,
+    private readonly notificationRepository: INotificationRepository,
   ) {}
 
   async execute(request: { days: number }) {

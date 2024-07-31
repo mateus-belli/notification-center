@@ -1,12 +1,14 @@
-import { Controller, Post } from '@nestjs/common';
-import { SendNotificationService } from '../../domain/services/send-notification.service';
+import { Controller, Get } from '@nestjs/common';
+import { ListNotificationsService } from '../../domain/services/list-notifications.service';
 
-@Controller()
+@Controller('/notifications')
 export class ListNotificationsController {
   constructor(
-    private readonly sendNotificationService: SendNotificationService,
+    private readonly listNotificationsService: ListNotificationsService,
   ) {}
 
-  @Post()
-  async send() {}
+  @Get()
+  async execute() {
+    return await this.listNotificationsService.execute();
+  }
 }

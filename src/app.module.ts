@@ -1,11 +1,25 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { MongooseModule } from '@nestjs/mongoose';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { ThrottlerModule } from '@nestjs/throttler';
+import { NotificationModule } from './apps/notification/notification.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { CorrelationMiddlewareMiddleware } from './middlewares/correlation/correlation.middleware';
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://localhost/nest')],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ScheduleModule.forRoot(),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 10,
+      },
+    ]),
+    NotificationModule,
+  ],
+  controllers: [],
+  providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(CorrelationMiddlewareMiddleware).forRoutes('*');
+  }
+}
